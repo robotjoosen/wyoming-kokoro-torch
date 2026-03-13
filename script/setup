@@ -12,13 +12,15 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--dev", action="store_true", help="Install dev requirements")
 args = parser.parse_args()
 
-# Create virtual environment
-builder = venv.EnvBuilder(with_pip=True)
-context = builder.ensure_directories(_VENV_DIR)
-builder.create(_VENV_DIR)
+# Create virtual environment with Python 3.12 (required for kokoro)
+_PYTHON = "/opt/homebrew/bin/python3.12"
+subprocess.run([_PYTHON, "-m", "venv", str(_VENV_DIR)], check=True)
 
-# Upgrade dependencies
-pip = [context.env_exe, "-m", "pip"]
+# Get the venv's Python executable
+_PYTHON_VENV = _VENV_DIR / "bin" / "python"
+pip = [_PYTHON_VENV, "-m", "pip"]
+
+# Upgrade pip
 subprocess.check_call(pip + ["install", "--upgrade", "pip"])
 subprocess.check_call(pip + ["install", "--upgrade", "setuptools", "wheel"])
 

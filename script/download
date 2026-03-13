@@ -1,0 +1,5 @@
+#!/bin/bash
+
+mkdir /data
+wget -O /data/kokoro-v1_0.pth https://huggingface.co/hexgrad/Kokoro-82M/resolve/main/kokoro-v1_0.pth
+wget -O /data/config.json https://huggingface.co/hexgrad/Kokoro-82M/resolve/main/config.json

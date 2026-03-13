@@ -1,0 +1,8 @@
+services:
+  kokoro-tts:
+    build: .
+    ports:
+      - "10200:10200"
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
